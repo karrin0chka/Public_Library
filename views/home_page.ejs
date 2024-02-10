@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <title>Публичная библиотека</title>
+        <style>
+            a {
+                font-size: 18px;
+            }
+            span {
+                font-size: 18px;
+            }
+            input {
+                color:#395047; 
+                margin-top: 5px;
+                font-size: 16px;
+            }
+            h1 {
+                color: #395047;
+            }
+            button#bttnSearch {
+                font-size: 16px;
+            }
+            .table {
+                margin-top: 10px;
+                font-size: 16px;
+                width: 100%;
+                margin-bottom: 20px;
+                border: 3px solid #96c9b4;
+                border-collapse: collapse; 
+                text-align: center;
+                vertical-align: middle;     
+            }
+            .table thead {
+                background-color: #96c9b49f;
+                font-size: 18px;
+            }
+            .table th {
+                font-weight: bold;
+                padding: 5px;
+                background: #efefef;
+                border: 2px solid #96c9b4;
+            }
+            .table td {
+                border: 2px solid #96c9b4;
+                padding: 5px;
+            }
+        </style>
+    </head>
+    <body> 
+        <h1>Публичная библиотека</h1>
+        <hr/>
+        <span href="/">На главную</span>
+        <a href="/search">Поиск</a>
+        <a href="/personal_account">Личный кабинет</a>
+        <hr/>
+
+        <form method="get" action="/search">
+            <input type="text" name="book_query" placeholder="Поиск" value="<%= book_query %>"/>
+            <button id="bttnSearch" type="submit">Найти</button>
+        </form>
+        <table class="table">
+            <thead>
+            <tr>
+                <td>Название книги</td>
+                <td>Автор</td>
+                <td>Издание</td>
+                <td>ISBN</td> 
+                <td>В наличии</td>
+                <td>Выбрать</td>
+            </tr>
+            </thead>
+            <tbody>
+            <% book_list.forEach(function(book) { %>
+            <tr>
+                <td><%=book.title_book%></td>
+                <td><%=book.author%></td>
+                <td><%=book.publishing_house%></td>
+                <td><%=book.isbn%></td>                       
+                <td><%=book.count_books%></td> 
+                <td>      
+                    <form method = "post" action = "/add_book/<%=book.isbn%>">
+                        <button id="bttnAdd" type ="submit">Добавить</button>  
+                    </form>  
+                </td>
+            </tr>
+        <%  }) %>
+        </tbody>
+        </table>
+
+        <dialog>
+            <%=error%>
+        </dialog>
+        <script>
+            var dialog = document.querySelector('dialog');
+            if ('<%=error%>' != "Книга добавлена") {
+                document.querySelector('#bttnAdd').onclick =
+                alert('<%=error%>')
+            }                 
+        </script>
+    </body> 
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <title>Публичная библиотека</title>
+        <style>
+            a {
+                font-size: 18px;
+            }
+            span {
+                font-size: 18px;
+            }
+            h1 {
+                color: #395047;
+            }
+            .table {
+                margin-top: 10px;
+                font-size: 16px;
+                width: 100%;
+                margin-bottom: 20px;
+                border: 3px solid #96c9b4;
+                border-collapse: collapse; 
+                text-align: center;
+                vertical-align: middle;     
+            }
+            .table thead {
+                background-color: #96c9b49f;
+                font-size: 18px;
+            }
+            .table th {
+                font-weight: bold;
+                padding: 5px;
+                background: #efefef;
+                border: 2px solid #96c9b4;
+            }
+            .table td {
+                border: 2px solid #96c9b4;
+                padding: 5px;
+            }
+        </style>
+    </head>
+    <body> 
+        <h1>Личный кабинет</h1>
+        <hr/>
+        <a href="/">На главную</a>
+        <a href="/search">Поиск</a>
+        <span href="/personal_account">Личный кабинет</span>
+        <hr/>
+        <table class="table">
+            <thead>
+            <tr>
+                <td>id</td>
+                <td>ISBN</td>
+                <td>Название книги</td>
+                <td>Автор</td>
+                <td>Дата взятия</td>     
+                <td>Дата сдачи</td>
+                <td>Сдать</td>
+            </tr>
+            </thead>
+            <% my_books.forEach(function(book) { %>
+            <tr>
+                <td><%=book.id_book%></td>
+                <td><%=book.isbn%></td>
+                <td><%=book.title_book%></td>
+                <td><%=book.author%></td>                       
+                <td><%=book.take_date.getDate() + '-' + book.take_date.getMonth() + '-' + book.take_date.getFullYear()%></td> 
+                <td><%=book.return_date.getDate() + '-' + book.return_date.getMonth() + '-' + book.return_date.getFullYear()%></td> 
+                
+                <td>      
+                    <form method = "post" action="/delete_book/<%=book.isbn%>">
+                        <button type="submit">Сдать</button> 
+                    </form>  
+                </td>
+            </tr>
+        <%  }) %>
+        </table>
+    </body>
+</html>
